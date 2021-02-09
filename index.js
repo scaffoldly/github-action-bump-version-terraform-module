@@ -118,6 +118,7 @@ Toolkit.run(async (tools) => {
     fs.writeFileSync(MODULE_FILE, JSON.stringify(pkg));
     await tools.runInWorkspace("git", ["add", MODULE_FILE]);
     console.log("new version:", newVersion);
+    console.log(`::set-output name=newTag::${newVersion}`)
     try {
       // to support "actions/checkout@v1"
       await tools.runInWorkspace("git", [
