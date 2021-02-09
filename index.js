@@ -140,11 +140,8 @@ Toolkit.run(async (tools) => {
     if (process.env["INPUT_SKIP-TAG"] !== "true") {
       console.log(`Creating tags...`);
       const tagResult = await tools.runInWorkspace("git", ["tag", newVersion]);
-      console.log(`Tag result:`, tagResult);
       const followResult = await tools.runInWorkspace("git", ["push", remoteRepo, "--follow-tags"]);
-      console.log(`Follow result:`, followResult);
       const pushResult = await tools.runInWorkspace("git", ["push", remoteRepo, "--tags"]);
-      console.log(`Push result:`, pushResult);
     } else {
       console.log(`Skipping tags due to skip-tag: ${process.env["INPUT_SKIP-TAG"]}`);
       await tools.runInWorkspace("git", ["push", remoteRepo]);
