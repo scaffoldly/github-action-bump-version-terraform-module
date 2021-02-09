@@ -134,11 +134,15 @@ Toolkit.run(async (tools) => {
     }
 
     const remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
+    console.log(`Finalizing on ${remoteRepo}...`);
+    
     if (process.env["INPUT_SKIP-TAG"] !== "true") {
+      console.log(`Creating tags...`);
       await tools.runInWorkspace("git", ["tag", newVersion]);
       await tools.runInWorkspace("git", ["push", remoteRepo, "--follow-tags"]);
       await tools.runInWorkspace("git", ["push", remoteRepo, "--tags"]);
     } else {
+      console.log(`Skipping tags due to skip-tag: ${process.env["INPUT_SKIP-TAG"]}`);
       await tools.runInWorkspace("git", ["push", remoteRepo]);
     }
   } catch (e) {
